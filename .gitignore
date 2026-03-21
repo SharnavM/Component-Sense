@@ -1,0 +1,8 @@
+node_modules
+__pycache__
+docs_raw
+dist
+
+.env
+.ingest_checkpoint.json
+semantic_chunks.json

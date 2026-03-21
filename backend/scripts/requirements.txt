@@ -1,0 +1,8 @@
+requests
+markdownify
+beautifulsoup4
+playwright
+langchain
+google-genai 
+pinecone 
+python-dotenv
