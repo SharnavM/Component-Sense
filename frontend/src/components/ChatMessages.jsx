@@ -1,5 +1,5 @@
-import { useRef, useEffect, useState, memo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useRef, useEffect, memo } from "react";
+import { motion } from "framer-motion";
 import AiResponse from "./AiResponse";
 
 function TypingDots() {

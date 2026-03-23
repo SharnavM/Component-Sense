@@ -1,34 +1,20 @@
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-/**
- * LibraryTabs
- * A pill-shaped container with a sliding rectangular indicator.
- * The active tab background colour transitions with the app state.
- *
- * Props:
- *   tabs        – object of { id, label } keyed by id
- *   active      – currently active tab id
- *   onChange    – (id: string) => void
- *   chatStarted – bool, drives active-tab colour
- */
+
 export default function LibraryTabs({ tabs, active, onChange, chatStarted }) {
   const tabsArray = Object.values(tabs);
   const tabRefs = useRef([]);
   const [indicator, setIndicator] = useState({ left: 4, width: 0 });
 
-  // Reposition the sliding indicator whenever the active tab changes
   useEffect(() => {
     const idx = tabsArray.findIndex((t) => t.id === active);
     const el = tabRefs.current[idx];
     if (el) {
       setIndicator({ left: el.offsetLeft, width: el.offsetWidth });
     }
-  }, [active]); // eslint-disable-line
+  }, [active]);
 
-  // Active indicator colour:
-  //   landing state → white (contrasts the pink bg)
-  //   chat state    → brand pink (contrasts the dark bg)
   const indicatorBg = chatStarted
     ? (tabs[active].indicatorBg ?? "#f65294")
     : "#f65294";
@@ -47,7 +33,6 @@ export default function LibraryTabs({ tabs, active, onChange, chatStarted }) {
         border: "1px solid rgba(255,255,255,0.08)",
       }}
     >
-      {/* Sliding background */}
       <motion.div
         aria-hidden
         style={{

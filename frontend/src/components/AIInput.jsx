@@ -1,26 +1,13 @@
 import { useState, useRef, useLayoutEffect } from "react";
 import { motion } from "framer-motion";
 
-const LINE_HEIGHT = 24; // px — matches CSS line-height
+const LINE_HEIGHT = 24;
 const MAX_LINES = 6;
 
-/**
- * AIInput
- * - Single-line by default, grows up to MAX_LINES, then scrollable
- * - Enter (no Shift) submits
- * - Submit button:  circle with ↑ arrow when idle
- *                   rounded-square with spinning loader when loading
- *
- * Props:
- *   onSubmit    – (query: string) => void
- *   isLoading   – bool
- *   chatStarted – bool (unused visually, kept for API parity)
- */
 export default function AIInput({ onSubmit, isLoading }) {
   const [value, setValue] = useState("");
   const textareaRef = useRef(null);
 
-  // Auto-resize textarea (synchronous – no flicker)
   useLayoutEffect(() => {
     const el = textareaRef.current;
     if (!el) return;
@@ -42,7 +29,6 @@ export default function AIInput({ onSubmit, isLoading }) {
     if (!trimmed || isLoading) return;
     onSubmit(trimmed);
     setValue("");
-    // Reset height immediately
     const el = textareaRef.current;
     if (el) {
       el.style.height = `${LINE_HEIGHT}px`;
@@ -54,7 +40,6 @@ export default function AIInput({ onSubmit, isLoading }) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-      {/* Input row */}
       <div
         style={{
           display: "flex",
@@ -92,7 +77,6 @@ export default function AIInput({ onSubmit, isLoading }) {
           }}
         />
 
-        {/* Submit / loader button */}
         <motion.button
           onClick={submit}
           disabled={!canSubmit && !isLoading}
@@ -119,7 +103,6 @@ export default function AIInput({ onSubmit, isLoading }) {
           aria-label={isLoading ? "Generating…" : "Submit"}
         >
           {isLoading ? (
-            /* Spinning arc */
             <svg
               className="spin-loader"
               width="17"
@@ -143,7 +126,6 @@ export default function AIInput({ onSubmit, isLoading }) {
               />
             </svg>
           ) : (
-            /* Arrow up */
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path
                 d="M7 11.5V2.5M3 6.5L7 2.5L11 6.5"
@@ -159,7 +141,6 @@ export default function AIInput({ onSubmit, isLoading }) {
         </motion.button>
       </div>
 
-      {/* Status line */}
       <p
         style={{
           margin: 0,

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SettingsProvider } from "./context/SettingsContext";
 import { SidebarProvider } from "./context/SidebarContext";
 import { ChatProvider } from "./context/ChatContext";
@@ -6,12 +6,6 @@ import AppLayout from "./layouts/AppLayout";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import SettingsPage from "./pages/SettingsPage";
-
-function HomePageWithKey() {
-  const { chatId } = useParams();
-  return <HomePage key={chatId} />;
-}
-
 export default function App() {
   return (
     <SettingsProvider>

@@ -4,7 +4,6 @@ import LibraryTabs from "../components/LibraryTabs";
 import AIInput from "../components/AIInput";
 import ExampleChips from "../components/ExampleChips";
 import ChatMessages from "../components/ChatMessages";
-import StatusIndicator from "../components/StatusIndicator";
 import { useSidebar } from "../context/SidebarContext";
 import {
   useNavigate,
@@ -15,7 +14,6 @@ import {
 import { useChat } from "../context/ChatContext";
 import { useSettings } from "../context/SettingsContext";
 
-/* ─── Library configs ─── */
 export const LIBRARIES = {
   mui: {
     id: "mui",
@@ -43,25 +41,6 @@ export const LIBRARIES = {
   },
 };
 
-/* ─── Simulated AI response ─── */
-const makeResponse = (query, libLabel) =>
-  `Here's what I found about **"${query}"** in the ${libLabel} documentation.
-\`\`\`jsx
-// Example usage
-import { Button } from '${libLabel === "Material UI" ? "@mui/material" : "react-native-paper"}';
-
-export default function Example() {
-  return (
-    <Button variant="contained" color="primary">
-      Click me
-    </Button>
-  );
-}
-\`\`\`
-
-This component supports multiple variants including **contained**, **outlined**, and **text**. Customise it using the theme provider or the \`sx\` prop for one-off overrides.
-
-For full details refer to the official ${libLabel} documentation.`;
 
 const normaliseMessages = (msgs = [], chatKey = "ephemeral") =>
   msgs.map((msg, index) => ({
@@ -91,17 +70,17 @@ const pageVariants = {
   }),
 };
 
-/* ════════════════════════════════════════════════════════════ */
+
 export default function HomePage() {
   const [activeLib, setActiveLib] = useState("mui");
   const [chatStarted, setChatStarted] = useState(false);
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { isConnected: isConnectedToBackend } = useOutletContext(); // true / false
+  const { isConnected: isConnectedToBackend } = useOutletContext();
   const [isInitialLoad, setIsInitialLoad] = useState(false);
 
   const lib = LIBRARIES[activeLib];
-  const { sidebarW, close } = useSidebar();
+  const { sidebarW } = useSidebar();
   const navigate = useNavigate();
   const { chatId } = useParams();
 
@@ -157,17 +136,14 @@ export default function HomePage() {
     }
   }, [chatId, searchParams, loadChat, clearActiveChat, navigate, chatStarted]);
 
-  const queryBackend = (query) => {};
-
-  /* ── Submit handler ── */
   const handleSubmit = useCallback(
     async (query) => {
       if (!query.trim() || isLoading) return;
 
-      if (!isConnectedToBackend) {
+      /* if (!isConnectedToBackend) {
         alert("Not connected to Backend");
         return;
-      }
+      } */
 
       const newUserMsg = {
         id: crypto.randomUUID(),
@@ -225,9 +201,8 @@ export default function HomePage() {
             savedAssistantMsg = {
               id: crypto.randomUUID(),
               role: "assistant",
-              content: `${body.detail || "Too many requests"}${
-                retryAfter ? ` Try again in ${retryAfter}s.` : ""
-              }`,
+              content: `${body.detail || "Too many requests"}${retryAfter ? ` Try again in ${retryAfter}s.` : ""
+                }`,
             };
 
             console.log("Rate limited:", savedAssistantMsg);
@@ -254,13 +229,11 @@ export default function HomePage() {
         };
       }
 
-      // local UI copy animates once
       setMessages((prev) => [
         ...prev,
         { ...savedAssistantMsg, _animate: true },
       ]);
 
-      // persisted copy does not carry visual animation state
       if (currentChatId) {
         addMessage(currentChatId, savedAssistantMsg);
       }
@@ -283,7 +256,6 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ── Animated full-screen background ── */}
       <motion.div
         style={{ position: "fixed", inset: 0, zIndex: 0 }}
         animate={{ backgroundColor: chatStarted ? "#0A0A0A" : "#f65294" }}
@@ -291,7 +263,6 @@ export default function HomePage() {
         transition={{ duration: 0.72, ease: [0.4, 0, 0.2, 1] }}
       />
 
-      {/* ── Main column ── */}
       <motion.main
         style={{
           position: "relative",
@@ -310,9 +281,6 @@ export default function HomePage() {
           damping: 32,
         }}
       >
-        {/* Tabs — span left→right of main area, flex-center contents.
-               initial/animate drive the slide-from-top entrance.
-               `left` in animate tracks the sidebar (no transform needed). */}
         <motion.div
           style={{
             position: "fixed",
@@ -342,9 +310,6 @@ export default function HomePage() {
           </div>
         </motion.div>
 
-        {/* ═══════════════════════════════════════════════════
-              LANDING / CHAT PAGE TRANSITION
-          ═══════════════════════════════════════════════════ */}
         <div
           style={{
             position: "relative",
@@ -371,7 +336,6 @@ export default function HomePage() {
                   padding: "80px 24px 32px",
                 }}
               >
-                {/* Heading */}
                 <h1
                   style={{
                     fontFamily: "Bricolage Grotesque, sans-serif",
@@ -387,7 +351,6 @@ export default function HomePage() {
                   How can I help you today?
                 </h1>
 
-                {/* Subtext — re-animates on tab change */}
                 <AnimatePresence mode="wait">
                   <motion.p
                     key={activeLib + "-sub"}
@@ -425,7 +388,6 @@ export default function HomePage() {
                   />
                 </motion.div>
 
-                {/* Example chips */}
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeLib + "-chips"}
@@ -459,7 +421,6 @@ export default function HomePage() {
                   paddingTop: 80,
                 }}
               >
-                {/* Messages area */}
                 <div
                   className="chat-container"
                   key={chatId || "ephemeral"}
@@ -475,21 +436,11 @@ export default function HomePage() {
                     isLoading={isLoading}
                     libLabel={lib.label}
                     onStreamingEnd={
-                      () => {}
-                      /*(messageId) => {
-                      setMessages((prev) =>
-                        prev.map((msg) =>
-                          msg.id === messageId
-                            ? { ...msg, _animate: false }
-                            : msg,
-                        ),
-                      );
-                    }*/
+                      () => { }
                     }
                   />
                 </div>
 
-                {/* Bottom input becomes part of chat page */}
                 <motion.div
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -529,14 +480,6 @@ export default function HomePage() {
           </AnimatePresence>
         </div>
 
-        {/* ── Fixed bottom input (chat only) ──────────────────────────
-               Spans left→right of available area (left tracks sidebar,
-               right stays 0) and flex-centers the inner wrapper.
-               Slides up from below; no layoutId, no transform conflict.
-          ─────────────────────────────────────────────────────────── */}
-
-        {/* ── Status indicator ── */}
-        {/* <StatusIndicator status={backendStatus} /> */}
       </motion.main>
     </>
   );

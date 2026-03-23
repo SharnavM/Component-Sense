@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useEffect, useState, useRef, memo } from "react";
+import { useEffect, useState, useRef, memo } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";

@@ -1,13 +1,5 @@
 import { motion } from "framer-motion";
 
-/**
- * ExampleChips
- * Renders a flex-wrap grid of dark pill chips prefixed with "Examples:".
- *
- * Props:
- *   examples – string[]
- *   onSelect – (example: string) => void
- */
 export default function ExampleChips({ examples, onSelect }) {
   return (
     <div
@@ -18,7 +10,6 @@ export default function ExampleChips({ examples, onSelect }) {
         gap: "10px",
       }}
     >
-      {/* Label */}
       <span
         style={{
           fontFamily: "Bricolage Grotesque, sans-serif",

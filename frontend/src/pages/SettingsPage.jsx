@@ -1,14 +1,10 @@
-import { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import StatusIndicator from "../components/StatusIndicator";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useSettings } from "../context/SettingsContext";
 import Reveal from "../components/Reveal";
 import { useSidebar } from "../context/SidebarContext";
 import { useChat } from "../context/ChatContext";
 
-/* ════════════════════════════════════════════════════════════════
-   Toggle — pill switch with spring thumb
-════════════════════════════════════════════════════════════════ */
 function Toggle({ checked, onChange }) {
   return (
     <button
@@ -45,9 +41,6 @@ function Toggle({ checked, onChange }) {
   );
 }
 
-/* ════════════════════════════════════════════════════════════════
-   SettingRow — label + description + control on one line
-════════════════════════════════════════════════════════════════ */
 function SettingRow({ label, description, children, accent = false }) {
   return (
     <div style={styles.row}>
@@ -67,16 +60,10 @@ function SettingRow({ label, description, children, accent = false }) {
   );
 }
 
-/* ════════════════════════════════════════════════════════════════
-   SectionLabel — same as AboutPage
-════════════════════════════════════════════════════════════════ */
 function SectionLabel({ children }) {
   return <p style={styles.sectionLabel}>{children}</p>;
 }
 
-/* ════════════════════════════════════════════════════════════════
-   InfoBanner — inline callout box
-════════════════════════════════════════════════════════════════ */
 function InfoBanner({ icon, children }) {
   return (
     <div style={styles.infoBanner}>
@@ -86,9 +73,6 @@ function InfoBanner({ icon, children }) {
   );
 }
 
-/* ════════════════════════════════════════════════════════════════
-   ClearButton — destructive action with confirm state
-════════════════════════════════════════════════════════════════ */
 function ClearButton({ onConfirm, clearDone }) {
   const [confirming, setConfirming] = useState(false);
 
@@ -98,7 +82,6 @@ function ClearButton({ onConfirm, clearDone }) {
       setConfirming(false);
     } else {
       setConfirming(true);
-      // Auto-reset after 3 s if user doesn't confirm
       setTimeout(() => setConfirming(false), 3000);
     }
   };
@@ -141,11 +124,7 @@ function ClearButton({ onConfirm, clearDone }) {
   );
 }
 
-/* ════════════════════════════════════════════════════════════════
-   SettingsPage
-════════════════════════════════════════════════════════════════ */
 export default function SettingsPage() {
-  const [backendStatus] = useState("connected");
   const [clearDone, setClearDone] = useState(false);
 
   const { settings, toggleSetting, clearChatHistory } = useSettings();
@@ -153,15 +132,14 @@ export default function SettingsPage() {
   const { clearAllChats } = useChat();
 
   const handleClear = () => {
-    clearChatHistory(); // still clears ragdocs_chats internally just to be safe
-    clearAllChats(); // resets Context state simultaneously
+    clearChatHistory();
+    clearAllChats();
     setClearDone(true);
     setTimeout(() => setClearDone(false), 2500);
   };
 
   return (
     <>
-      {/* Background */}
       <div
         style={{
           position: "fixed",
@@ -171,7 +149,6 @@ export default function SettingsPage() {
         }}
       />
 
-      {/* Main */}
       <motion.main
         style={{
           position: "relative",
@@ -194,7 +171,6 @@ export default function SettingsPage() {
             width: "100%",
           }}
         >
-          {/* ── Page header ── */}
           <Reveal style={{ marginBottom: 48 }}>
             <p style={styles.eyebrow}>Preferences</p>
             <h1 style={styles.pageTitle}>Settings</h1>
@@ -203,9 +179,6 @@ export default function SettingsPage() {
             </p>
           </Reveal>
 
-          {/* ══════════════════════════════════════════
-              SECTION — Chat behaviour
-          ══════════════════════════════════════════ */}
           <Reveal delay={0.05} style={{ marginBottom: 12 }}>
             <SectionLabel>Chat behaviour</SectionLabel>
           </Reveal>
@@ -225,7 +198,6 @@ export default function SettingsPage() {
 
               <div style={styles.divider} />
 
-              {/* Save chats toggle */}
               <SettingRow
                 label="Save new chats to local storage"
                 description="Persist your conversation history in this browser so it survives page reloads. Chats are never sent to a server."
@@ -236,7 +208,6 @@ export default function SettingsPage() {
                 />
               </SettingRow>
 
-              {/* Animated sub-row — only visible when toggle is on */}
               <AnimatePresence>
                 {settings.saveChatsToStorage && (
                   <motion.div
@@ -288,7 +259,6 @@ export default function SettingsPage() {
   );
 }
 
-/* ─── Styles ──────────────────────────────────────────────────── */
 const styles = {
   eyebrow: {
     fontFamily: '"Plus Jakarta Sans", sans-serif',

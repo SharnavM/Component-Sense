@@ -1,10 +1,8 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import StatusIndicator from "../components/StatusIndicator";
 import Reveal from "../components/Reveal";
 import { useSidebar } from "../context/SidebarContext";
 
-/* ─── Content  ─── */
 const HOW_I_BUILT_IT = [
   {
     step: "01",
@@ -54,7 +52,6 @@ const GITHUB_URL = import.meta.env.VITE_GITHUB_REPO_URL ?? "#";
 const LINKEDIN_URL = import.meta.env.VITE_LINKEDIN_URL ?? "#";
 const PORTFOLIO_LINK = import.meta.env.VITE_PORTFOLIO_URL ?? "#";
 
-/* ─── Category accent colours ─── */
 const CATEGORY_COLORS = {
   Frontend: {
     bg: "rgba(240, 62, 132, 0.12)",
@@ -73,14 +70,10 @@ const CATEGORY_COLORS = {
   },
 };
 
-/* ════════════════════════════════════════════════════════════ */
 export default function AboutPage() {
-  const [backendStatus] = useState("connected");
-
   const { sidebarW } = useSidebar();
   return (
     <>
-      {/* ── Background — always dark on About ── */}
       <div
         style={{
           position: "fixed",
@@ -90,7 +83,6 @@ export default function AboutPage() {
         }}
       />
 
-      {/* ── Main ── */}
       <motion.main
         style={{
           position: "relative",
@@ -113,7 +105,6 @@ export default function AboutPage() {
             width: "100%",
           }}
         >
-          {/* ── Page header ── */}
           <Reveal style={{ marginBottom: 64 }}>
             <p style={styles.eyebrow}>About this project</p>
             <h1 style={styles.pageTitle}>
@@ -134,7 +125,6 @@ export default function AboutPage() {
 
           <Divider />
 
-          {/* ── How I built it ── */}
           <Reveal style={{ marginBottom: 56 }}>
             <SectionLabel>How I built it</SectionLabel>
 
@@ -146,7 +136,6 @@ export default function AboutPage() {
                   style={styles.stepRow}
                   vertical
                 >
-                  {/* Step number + vertical line */}
                   <div style={styles.stepLeft}>
                     <span style={styles.stepNumber}>{item.step}</span>
                     {i < HOW_I_BUILT_IT.length - 1 && (
@@ -154,7 +143,6 @@ export default function AboutPage() {
                     )}
                   </div>
 
-                  {/* Content */}
                   <div style={styles.stepContent}>
                     <p style={styles.stepTitle}>{item.title}</p>
                     <p style={styles.stepDesc}>{item.description}</p>
@@ -166,11 +154,9 @@ export default function AboutPage() {
 
           <Divider />
 
-          {/* ── Tech stack ── */}
           <Reveal style={{ marginBottom: 56 }}>
             <SectionLabel>Tech stack</SectionLabel>
 
-            {/* Group by category */}
             {Object.keys(CATEGORY_COLORS).map((category, ci) => {
               const items = TECH_STACK.filter((t) => t.category === category);
               if (!items.length) return null;
@@ -224,7 +210,6 @@ export default function AboutPage() {
 
           <Divider />
 
-          {/* ── Links ── */}
           <div style={{ display: "flex", flexDirection: "row", gap: "5%" }}>
             <Reveal offset={120} style={{ width: "45%" }}>
               <SectionLabel>Source code</SectionLabel>
@@ -247,7 +232,6 @@ export default function AboutPage() {
                   whileTap={{ scale: 0.97 }}
                   style={styles.linkButton}
                 >
-                  {/* GitHub icon */}
                   <svg
                     viewBox="0 0 24 24"
                     width="20"
@@ -265,7 +249,6 @@ export default function AboutPage() {
                       {GITHUB_URL.replace("https://", "")}
                     </p>
                   </div>
-                  {/* Arrow */}
                   <svg
                     width="16"
                     height="16"
@@ -290,7 +273,6 @@ export default function AboutPage() {
                 Find me below and explore my work.
               </p>
 
-              {/* LinkedIn */}
               <a
                 href={LINKEDIN_URL}
                 target="_blank"
@@ -305,7 +287,6 @@ export default function AboutPage() {
                   whileTap={{ scale: 0.97 }}
                   style={styles.linkButton}
                 >
-                  {/* LinkedIn colour dot + icon */}
                   <div style={styles.iconWrap("#0A84FF")}>
                     <svg
                       width="16"
@@ -340,7 +321,6 @@ export default function AboutPage() {
                 </motion.div>
               </a>
 
-              {/* Portfolio */}
               <a
                 href={PORTFOLIO_LINK}
                 target="_blank"
@@ -356,7 +336,6 @@ export default function AboutPage() {
                   style={styles.linkButton}
                 >
                   <div style={styles.iconWrap("#f65294")}>
-                    {/* Briefcase icon */}
                     <svg
                       width="16"
                       height="16"
@@ -404,8 +383,6 @@ export default function AboutPage() {
   );
 }
 
-/* ─── Small shared components ─── */
-
 function SectionLabel({ children }) {
   return (
     <p
@@ -443,7 +420,6 @@ function Divider() {
   );
 }
 
-/* ─── Style objects ─── */
 const styles = {
   eyebrow: {
     fontFamily: '"Plus Jakarta Sans", sans-serif',

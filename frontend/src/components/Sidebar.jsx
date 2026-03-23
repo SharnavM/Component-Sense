@@ -1,8 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Info, Plus, Settings } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useChat } from "../context/ChatContext";
 
-/* ─── Inline SVG icons ─── */
 const Icons = {
   hamburger: <Menu size={18} />,
   close: <X size={18} />,
@@ -20,17 +20,6 @@ const NAV_ITEMS = [
 const CLOSED_W = 52;
 const OPEN_W = 240;
 
-/**
- * Sidebar
- * Flat collapsible left rail.
- *   Closed → 52 px  (icons only)
- *   Open   → 240 px (icons + labels)
- *
- * Props:
- *   isOpen      – bool
- *   onToggle    – () => void
- */
-import { useChat } from "../context/ChatContext";
 
 export default function Sidebar({
   isOpen,
@@ -62,7 +51,6 @@ export default function Sidebar({
     if (window.innerWidth < 768 && isOpen) onToggle();
   };
 
-  // Chats are already sorted newest first from context
   const historyItems = chats;
 
   return (
@@ -84,7 +72,6 @@ export default function Sidebar({
         transition: "background 0.6s",
       }}
     >
-      {/* Toggle button */}
       <button
         onClick={onToggle}
         style={{
@@ -116,7 +103,6 @@ export default function Sidebar({
         </motion.div>
       </button>
 
-      {/* Divider */}
       <div
         style={{
           height: "1px",
@@ -125,7 +111,6 @@ export default function Sidebar({
         }}
       />
 
-      {/* Nav items */}
       <nav
         style={{
           display: "flex",
@@ -144,7 +129,6 @@ export default function Sidebar({
         ))}
       </nav>
 
-      {/* History section (only when open and there are messages) */}
       <AnimatePresence>
         {isOpen && historyItems.length > 0 && (
           <motion.div
@@ -195,7 +179,6 @@ export default function Sidebar({
   );
 }
 
-/* ─── Single nav button ─── */
 function NavItem({ item, isOpen, onAction }) {
   return (
     <button
@@ -223,7 +206,6 @@ function NavItem({ item, isOpen, onAction }) {
         e.currentTarget.style.background = "transparent";
       }}
     >
-      {/* Icon (always visible) */}
       <span
         style={{
           flexShrink: 0,
@@ -236,7 +218,6 @@ function NavItem({ item, isOpen, onAction }) {
         {item.icon}
       </span>
 
-      {/* Label (only when open) */}
       <AnimatePresence>
         {isOpen && (
           <motion.span

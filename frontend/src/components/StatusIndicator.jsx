@@ -22,13 +22,6 @@ const STATUS = {
   },
 };
 
-/**
- * StatusIndicator
- * Fixed bottom-right dot that shows backend connection state.
- *
- * Props:
- *   status – 'connected' | 'connecting' | 'disconnected'
- */
 export default function StatusIndicator({ setParentState }) {
   const [hover, setHover] = useState(false);
   const [status, setStatus] = useState("disconnected");
@@ -77,7 +70,6 @@ export default function StatusIndicator({ setParentState }) {
         flexDirection: "row-reverse",
       }}
     >
-      {/* The dot */}
       <div
         style={{
           position: "relative",
@@ -88,7 +80,6 @@ export default function StatusIndicator({ setParentState }) {
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        {/* Pulse ring for connected state */}
         {cfg.pulse && (
           <div
             className="pulse-ring"
@@ -102,7 +93,6 @@ export default function StatusIndicator({ setParentState }) {
           />
         )}
 
-        {/* Spinning arc for connecting state */}
         {cfg.spin && (
           <svg
             className="spin-loader"
@@ -128,7 +118,6 @@ export default function StatusIndicator({ setParentState }) {
           </svg>
         )}
 
-        {/* Core dot */}
         <motion.div
           style={{
             position: "absolute",
@@ -139,7 +128,6 @@ export default function StatusIndicator({ setParentState }) {
         />
       </div>
 
-      {/* Tooltip */}
       <AnimatePresence>
         {hover && (
           <motion.div
