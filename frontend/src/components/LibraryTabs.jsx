@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-
 export default function LibraryTabs({ tabs, active, onChange, chatStarted }) {
   const tabsArray = Object.values(tabs);
   const tabRefs = useRef([]);
@@ -19,30 +18,13 @@ export default function LibraryTabs({ tabs, active, onChange, chatStarted }) {
     ? (tabs[active].indicatorBg ?? "#f65294")
     : "#f65294";
   const activeColor = chatStarted ? "#ffffff" : "#111111";
-  const inactiveColor = "rgba(255,255,255,0.55)";
 
   return (
-    <div
-      style={{
-        display: "inline-flex",
-        position: "relative",
-        padding: "4px",
-        borderRadius: "14px",
-        background: "rgba(12,12,12,0.78)",
-        backdropFilter: "blur(14px)",
-        border: "1px solid rgba(255,255,255,0.08)",
-      }}
-    >
+    <div className="inline-flex relative p-1 md:p-1.5 rounded-[14px] bg-[#0c0c0c]/75 backdrop-blur-md border border-white/10">
       <motion.div
         aria-hidden
-        style={{
-          position: "absolute",
-          top: 4,
-          bottom: 4,
-          borderRadius: "10px",
-          zIndex: 0,
-          background: indicatorBg,
-        }}
+        className="absolute top-1 bottom-1 md:top-1.5 md:bottom-1.5 rounded-[10px] z-0"
+        style={{ background: indicatorBg }}
         animate={{
           left: indicator.left,
           width: indicator.width,
@@ -58,21 +40,9 @@ export default function LibraryTabs({ tabs, active, onChange, chatStarted }) {
             key={tab.id}
             ref={(el) => (tabRefs.current[idx] = el)}
             onClick={() => onChange(tab.id)}
+            className="relative z-10 px-4 py-1.5 md:px-8 md:py-2.5 border-none bg-transparent cursor-pointer rounded-[10px] font-['Bricolage_Grotesque',sans-serif] text-xs md:text-[15px] font-semibold tracking-wide whitespace-nowrap transition-colors duration-250"
             style={{
-              position: "relative",
-              zIndex: 1,
-              padding: "10px 32px",
-              border: "none",
-              background: "transparent",
-              cursor: "pointer",
-              borderRadius: "10px",
-              fontFamily: "Bricolage Grotesque, sans-serif",
-              fontSize: "15px",
-              fontWeight: 600,
-              letterSpacing: "0.01em",
-              color: isActive ? activeColor : inactiveColor,
-              transition: "color 0.25s",
-              whiteSpace: "nowrap",
+              color: isActive ? activeColor : "rgba(255,255,255,0.55)",
             }}
           >
             {tab.label}

@@ -58,45 +58,22 @@ export default function StatusIndicator({ setParentState }) {
   const cfg = STATUS[status] ?? STATUS.disconnected;
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        bottom: 22,
-        right: 22,
-        zIndex: 999,
-        display: "flex",
-        alignItems: "center",
-        gap: 10,
-        flexDirection: "row-reverse",
-      }}
-    >
+    <div className="fixed bottom-5 right-5 z-[999] flex items-center gap-2.5 flex-row-reverse">
       <div
-        style={{
-          position: "relative",
-          width: 14,
-          height: 14,
-          cursor: "default",
-        }}
+        className="relative w-3.5 h-3.5 cursor-default"
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
         {cfg.pulse && (
           <div
-            className="pulse-ring"
-            style={{
-              position: "absolute",
-              inset: 0,
-              borderRadius: "50%",
-              background: cfg.color,
-              opacity: 0.6,
-            }}
+            className="pulse-ring absolute inset-0 rounded-full opacity-60"
+            style={{ background: cfg.color }}
           />
         )}
 
         {cfg.spin && (
           <svg
-            className="spin-loader"
-            style={{ position: "absolute", inset: 0 }}
+            className="spin-loader absolute inset-0"
             width="14"
             height="14"
             viewBox="0 0 14 14"
@@ -119,10 +96,9 @@ export default function StatusIndicator({ setParentState }) {
         )}
 
         <motion.div
+          className="absolute rounded-full"
           style={{
-            position: "absolute",
             inset: cfg.spin ? 3 : 0,
-            borderRadius: "50%",
             background: cfg.color,
           }}
         />
@@ -135,29 +111,11 @@ export default function StatusIndicator({ setParentState }) {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 8 }}
             transition={{ duration: 0.18 }}
-            style={{
-              padding: "6px 12px",
-              borderRadius: "8px",
-              background: "rgba(18,18,18,0.96)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              fontSize: "12px",
-              fontWeight: 500,
-              color: "rgba(255,255,255,0.8)",
-              fontFamily: '"Plus Jakarta Sans", sans-serif',
-              whiteSpace: "nowrap",
-              pointerEvents: "none",
-            }}
+            className="px-3 py-1.5 rounded-lg bg-[#121212]/96 border border-white/10 text-xs font-medium text-white/80 font-jakarta whitespace-nowrap pointer-events-none"
           >
             <span
-              style={{
-                display: "inline-block",
-                width: 7,
-                height: 7,
-                borderRadius: "50%",
-                background: cfg.color,
-                marginRight: 7,
-                verticalAlign: "middle",
-              }}
+              className="inline-block w-1.5 h-1.5 rounded-full mr-1.5 align-middle"
+              style={{ background: cfg.color }}
             />
             {cfg.label}
           </motion.div>

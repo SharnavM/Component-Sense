@@ -80,6 +80,7 @@ Uses **Framer Motion** for smooth transitions, subtle interactions, and a polish
 
 - React
 - Vite
+- Tailwind CSS
 - Framer Motion
 
 ### AI

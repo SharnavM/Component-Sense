@@ -1,20 +1,28 @@
-import { createContext, useContext, useState, useCallback } from "react";
+import { createContext, useContext, useState, useCallback, useEffect } from "react";
 
 const SIDEBAR_CLOSED = 52;
-const SIDEBAR_OPEN   = 240;
+const SIDEBAR_OPEN = 240;
 
 const SidebarContext = createContext(null);
 
 export function SidebarProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const toggle = useCallback(() => setIsOpen((o) => !o), []);
-  const close  = useCallback(() => setIsOpen(false), []);
+  const close = useCallback(() => setIsOpen(false), []);
 
-  const sidebarW = isOpen ? SIDEBAR_OPEN : SIDEBAR_CLOSED;
+  const sidebarW = isMobile ? 0 : (isOpen ? SIDEBAR_OPEN : SIDEBAR_CLOSED);
 
   return (
-    <SidebarContext.Provider value={{ isOpen, toggle, close, sidebarW }}>
+    <SidebarContext.Provider value={{ isOpen, toggle, close, sidebarW, isMobile }}>
       {children}
     </SidebarContext.Provider>
   );

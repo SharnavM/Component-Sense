@@ -2,25 +2,8 @@ import { motion } from "framer-motion";
 
 export default function ExampleChips({ examples, onSelect }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        alignItems: "center",
-        gap: "10px",
-      }}
-    >
-      <span
-        style={{
-          fontFamily: "Bricolage Grotesque, sans-serif",
-          fontSize: "13px",
-          fontWeight: 600,
-          color: "rgba(0,0,0,0.55)",
-          whiteSpace: "nowrap",
-          letterSpacing: "0.02em",
-          marginRight: "2px",
-        }}
-      >
+    <div className="flex flex-wrap items-center gap-2.5">
+      <span className="font-['Bricolage_Grotesque',sans-serif] text-[13px] font-semibold text-black/55 whitespace-nowrap tracking-wide mr-0.5">
         Examples:
       </span>
 
@@ -37,19 +20,7 @@ export default function ExampleChips({ examples, onSelect }) {
           whileHover={{ scale: 1.03, backgroundColor: "rgba(10,10,10,0.88)" }}
           whileTap={{ scale: 0.96 }}
           onClick={() => onSelect(ex)}
-          style={{
-            padding: "9px 16px",
-            borderRadius: "100px",
-            background: "rgba(10,10,10,0.72)",
-            border: "1px solid rgba(255,255,255,0.06)",
-            color: "rgba(255,255,255,0.68)",
-            fontSize: "13px",
-            fontFamily: '"Plus Jakarta Sans", sans-serif',
-            fontWeight: 500,
-            cursor: "pointer",
-            outline: "none",
-            transition: "color 0.2s",
-          }}
+          className="px-4 py-[9px] rounded-full bg-[#0a0a0a]/70 border border-white/5 text-white/70 text-[13px] font-jakarta font-medium cursor-pointer outline-none transition-colors hover:text-white"
         >
           {ex}
         </motion.button>

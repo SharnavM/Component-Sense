@@ -39,19 +39,8 @@ export default function AIInput({ onSubmit, isLoading }) {
   const canSubmit = value.trim().length > 0 && !isLoading;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "flex-end",
-          gap: "12px",
-          padding: "12px 16px 12px 20px",
-          borderRadius: "18px",
-          background: "#1A1A1A",
-          border: "1px solid rgba(255,255,255,0.06)",
-          transition: "border-color 0.2s",
-        }}
-      >
+    <div className="flex flex-col gap-2">
+      <div className="flex items-end gap-3 px-4 py-3 pl-5 rounded-[18px] bg-[#1A1A1A] border border-white/5 transition-colors duration-200">
         <textarea
           ref={textareaRef}
           value={value}
@@ -60,20 +49,11 @@ export default function AIInput({ onSubmit, isLoading }) {
           disabled={isLoading}
           placeholder="Type a query...."
           rows={1}
+          className="flex-1 self-center bg-transparent border-none outline-none resize-none text-white/85 text-[15px] font-jakarta overflow-hidden"
           style={{
-            flex: 1,
-            alignSelf: "center",
-            background: "transparent",
-            border: "none",
-            outline: "none",
-            resize: "none",
-            color: "rgba(255,255,255,0.85)",
             caretColor: "#f65294",
             lineHeight: `${LINE_HEIGHT}px`,
             height: `${LINE_HEIGHT}px`,
-            overflowY: "hidden",
-            fontSize: "15px",
-            fontFamily: '"Plus Jakarta Sans", sans-serif',
           }}
         />
 
@@ -83,33 +63,17 @@ export default function AIInput({ onSubmit, isLoading }) {
           whileTap={canSubmit ? { scale: 0.82 } : {}}
           animate={{ borderRadius: isLoading ? "10px" : "50%" }}
           transition={{ borderRadius: { duration: 0.22, ease: "easeInOut" } }}
-          style={{
-            flexShrink: 0,
-            width: 36,
-            height: 36,
-            border: "1px solid rgba(255,255,255,0.1)",
-            background:
-              canSubmit || isLoading
-                ? "rgba(255,255,255,0.16)"
-                : "rgba(255,255,255,0.06)",
-            cursor: canSubmit ? "pointer" : "default",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 0,
-            outline: "none",
-            transition: "background 0.2s",
-          }}
+          className={`shrink-0 w-9 h-9 border border-white/10 flex items-center justify-center p-0 outline-none transition-colors duration-200 ${canSubmit || isLoading ? "bg-white/15 cursor-pointer" : "bg-white/5 cursor-default"
+            }`}
           aria-label={isLoading ? "Generating…" : "Submit"}
         >
           {isLoading ? (
             <svg
-              className="spin-loader"
+              className="spin-loader block"
               width="17"
               height="17"
               viewBox="0 0 17 17"
               fill="none"
-              style={{ display: "block" }}
             >
               <circle
                 cx="8.5"
@@ -141,17 +105,7 @@ export default function AIInput({ onSubmit, isLoading }) {
         </motion.button>
       </div>
 
-      <p
-        style={{
-          margin: 0,
-          textAlign: "center",
-          fontSize: "12px",
-          letterSpacing: "0.01em",
-          color: "rgba(255,255,255,0.5)",
-          fontFamily: '"Plus Jakarta Sans", sans-serif',
-          transition: "color 0.3s",
-        }}
-      >
+      <p className="m-0 text-center text-xs tracking-wide text-white/50 font-jakarta transition-colors duration-300">
         {isLoading ? "Generating response…" : "Ready to submit!"}
       </p>
     </div>

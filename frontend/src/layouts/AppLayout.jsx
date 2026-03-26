@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import { useSidebar } from "../context/SidebarContext";
 import StatusIndicator from "../components/StatusIndicator";
 import { useEffect, useState } from "react";
+import { Menu } from "lucide-react";
 
 
 export default function AppLayout() {
@@ -10,19 +11,19 @@ export default function AppLayout() {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    console.log("AppLayout isConnected:", isConnected);
   }, [isConnected]);
 
   return (
-
-    <div
-      style={{
-        position: "relative",
-        display: "flex",
-        height: "100vh",
-        overflow: "hidden",
-      }}
-    >
+    <div className="relative w-full h-full overflow-hidden">
+      {!isOpen && (
+        <button
+          onClick={toggle}
+          className="fixed top-4 left-4 z-50 p-2 text-white bg-black/40 backdrop-blur rounded-full md:hidden hover:bg-black/60 transition-colors"
+          aria-label="Open Sidebar"
+        >
+          <Menu size={20} />
+        </button>
+      )}
 
       <Sidebar isOpen={isOpen} onToggle={toggle} />
 

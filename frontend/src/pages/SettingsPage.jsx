@@ -11,31 +11,13 @@ function Toggle({ checked, onChange }) {
       role="switch"
       aria-checked={checked}
       onClick={onChange}
-      style={{
-        flexShrink: 0,
-        width: 44,
-        height: 26,
-        borderRadius: 13,
-        border: "none",
-        cursor: "pointer",
-        padding: 3,
-        display: "flex",
-        alignItems: "center",
-        background: checked ? "#f65294" : "rgba(255,255,255,0.12)",
-        transition: "background 0.25s ease",
-        outline: "none",
-      }}
+      className={`shrink-0 w-11 h-[26px] rounded-full border-none cursor-pointer p-[3px] flex items-center outline-none transition-colors duration-250 ${checked ? "bg-[#f65294]" : "bg-white/10"
+        }`}
     >
       <motion.div
         animate={{ x: checked ? 18 : 0 }}
         transition={{ type: "spring", stiffness: 500, damping: 34 }}
-        style={{
-          width: 20,
-          height: 20,
-          borderRadius: "50%",
-          background: "white",
-          boxShadow: "0 1px 4px rgba(0,0,0,0.35)",
-        }}
+        className="w-5 h-5 rounded-full bg-white shadow-[0_1px_4px_rgba(0,0,0,0.35)]"
       />
     </button>
   );
@@ -43,32 +25,40 @@ function Toggle({ checked, onChange }) {
 
 function SettingRow({ label, description, children, accent = false }) {
   return (
-    <div style={styles.row}>
-      <div style={{ flex: 1, minWidth: 0 }}>
+    <div className="flex items-center px-4 md:px-5 py-4 md:py-[18px] gap-2 md:gap-3">
+      <div className="flex-1 min-w-0">
         <p
-          style={{
-            ...styles.rowLabel,
-            color: accent ? "#f65294" : "rgba(255,255,255,0.88)",
-          }}
+          className={`font-['Bricolage_Grotesque',sans-serif] text-[13px] md:text-[14px] font-bold m-0 mb-1 leading-[1.3] ${accent ? "text-[#f65294]" : "text-white/90"
+            }`}
         >
           {label}
         </p>
-        {description && <p style={styles.rowDesc}>{description}</p>}
+        {description && (
+          <p className="font-jakarta text-[12px] md:text-[13px] text-white/30 leading-[1.6] m-0">
+            {description}
+          </p>
+        )}
       </div>
-      <div style={{ flexShrink: 0, marginLeft: 24 }}>{children}</div>
+      <div className="shrink-0 ml-2 md:ml-6">{children}</div>
     </div>
   );
 }
 
 function SectionLabel({ children }) {
-  return <p style={styles.sectionLabel}>{children}</p>;
+  return (
+    <p className="font-['Bricolage_Grotesque',sans-serif] text-[11px] font-bold tracking-[0.1em] uppercase text-white/20 m-0 mb-2.5">
+      {children}
+    </p>
+  );
 }
 
 function InfoBanner({ icon, children }) {
   return (
-    <div style={styles.infoBanner}>
-      <span style={{ fontSize: 15, flexShrink: 0, lineHeight: 1 }}>{icon}</span>
-      <p style={styles.infoBannerText}>{children}</p>
+    <div className="flex items-start gap-3 px-5 py-4 bg-[#f65294]/[0.07] border-b border-[#f65294]/[0.12]">
+      <span className="text-[15px] shrink-0 leading-none">{icon}</span>
+      <p className="font-jakarta text-[13px] text-white/45 leading-[1.65] m-0">
+        {children}
+      </p>
     </div>
   );
 }
@@ -92,21 +82,10 @@ function ClearButton({ onConfirm, clearDone }) {
       disabled={clearDone}
       whileTap={{ scale: 0.96 }}
       animate={{ width: "auto" }}
-      style={{
-        padding: "9px 20px",
-        borderRadius: "10px",
-        border: `1px solid ${confirming ? "rgba(239,68,68,0.5)" : "rgba(255,255,255,0.1)"}`,
-        background: confirming
-          ? "rgba(239,68,68,0.12)"
-          : "rgba(255,255,255,0.04)",
-        color: confirming ? "#f87171" : "rgba(255,255,255,0.5)",
-        fontFamily: "Bricolage Grotesque, sans-serif",
-        fontSize: "13px",
-        fontWeight: 600,
-        cursor: "pointer",
-        transition: "all 0.2s ease",
-        whiteSpace: "nowrap",
-      }}
+      className={`px-2.5 py-1.5 md:px-5 md:py-[9px] rounded-lg md:rounded-[10px] font-['Bricolage_Grotesque',sans-serif] text-[11.5px] md:text-[13px] font-semibold cursor-pointer transition-all duration-200 whitespace-nowrap border ${confirming
+        ? "bg-red-500/10 border-red-500/50 text-red-400"
+        : "bg-white/[0.04] border-white/10 text-white/50"
+        }`}
     >
       <AnimatePresence mode="wait">
         <motion.span
@@ -115,7 +94,7 @@ function ClearButton({ onConfirm, clearDone }) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -4 }}
           transition={{ duration: 0.15 }}
-          style={{ display: "block" }}
+          className="block"
         >
           {confirming ? "Press again to confirm" : "Clear saved chats"}
         </motion.span>
@@ -140,41 +119,22 @@ export default function SettingsPage() {
 
   return (
     <>
-      <div
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 0,
-          backgroundColor: "#0A0A0A",
-        }}
-      />
+      <div className="fixed inset-0 z-0 bg-[#0A0A0A]" />
 
       <motion.main
-        style={{
-          position: "relative",
-          zIndex: 10,
-          display: "flex",
-          flexDirection: "column",
-          flex: 1,
-          height: "100vh",
-          overflowY: "auto",
-          overflowX: "hidden",
-        }}
+        className="relative z-10 flex flex-col flex-1 h-[100dvh] overflow-y-auto overflow-x-hidden"
         animate={{ marginLeft: sidebarW }}
         transition={{ type: "spring", stiffness: 340, damping: 32 }}
       >
-        <div
-          style={{
-            maxWidth: 680,
-            margin: "0 auto",
-            padding: "72px 32px 80px",
-            width: "100%",
-          }}
-        >
+        <div className="max-w-[680px] mx-auto pt-[72px] px-8 pb-[80px] w-full">
           <Reveal style={{ marginBottom: 48 }}>
-            <p style={styles.eyebrow}>Preferences</p>
-            <h1 style={styles.pageTitle}>Settings</h1>
-            <p style={styles.lead}>
+            <p className="font-jakarta text-[12px] font-semibold tracking-[0.1em] uppercase text-[#f65294] m-0 mb-3">
+              Preferences
+            </p>
+            <h1 className="font-['Bricolage_Grotesque',sans-serif] text-[clamp(2rem,4vw,2.8rem)] font-extrabold text-white/90 leading-[1.15] tracking-[-0.02em] m-0 mb-[14px]">
+              Settings
+            </h1>
+            <p className="font-jakarta text-[1rem] text-white/40 leading-[1.7] m-0">
               Adjust how the app behaves. Changes are saved automatically.
             </p>
           </Reveal>
@@ -184,11 +144,9 @@ export default function SettingsPage() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <div style={styles.card}>
+            <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl overflow-hidden">
               <InfoBanner icon="⚡">
-                <strong
-                  style={{ color: "rgba(255,255,255,0.75)", fontWeight: 600 }}
-                >
+                <strong className="text-white/75 font-semibold">
                   Each message is fully independent.
                 </strong>{" "}
                 The AI has no memory of previous messages in the session. Every
@@ -196,7 +154,7 @@ export default function SettingsPage() {
                 as context.
               </InfoBanner>
 
-              <div style={styles.divider} />
+              <div className="h-px bg-white/[0.06] mx-5" />
 
               <SettingRow
                 label="Save new chats to local storage"
@@ -215,20 +173,14 @@ export default function SettingsPage() {
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                    style={{ overflow: "hidden" }}
+                    className="overflow-hidden"
                   >
-                    <div style={{ ...styles.divider, marginTop: 0 }} />
+                    <div className="h-px bg-white/[0.06] mx-5 mt-0" />
                     <SettingRow
                       label="Clear saved chat history"
                       description="Permanently remove all chats stored in this browser's local storage."
                     >
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 12,
-                        }}
-                      >
+                      <div className="flex flex-col md:flex-row items-end md:items-center gap-1.5 md:gap-3">
                         <AnimatePresence>
                           {clearDone && (
                             <motion.span
@@ -236,7 +188,7 @@ export default function SettingsPage() {
                               animate={{ opacity: 1, x: 0 }}
                               exit={{ opacity: 0 }}
                               transition={{ duration: 0.2 }}
-                              style={styles.clearDoneTag}
+                              className="font-jakarta text-[11px] md:text-[12px] font-semibold text-[#48bb78] whitespace-nowrap"
                             >
                               ✓ Cleared
                             </motion.span>
@@ -259,112 +211,3 @@ export default function SettingsPage() {
   );
 }
 
-const styles = {
-  eyebrow: {
-    fontFamily: '"Plus Jakarta Sans", sans-serif',
-    fontSize: "12px",
-    fontWeight: 600,
-    letterSpacing: "0.1em",
-    textTransform: "uppercase",
-    color: "#f65294",
-    marginBottom: 12,
-    margin: "0 0 12px",
-  },
-  pageTitle: {
-    fontFamily: "Bricolage Grotesque, sans-serif",
-    fontSize: "clamp(2rem, 4vw, 2.8rem)",
-    fontWeight: 800,
-    color: "rgba(255,255,255,0.92)",
-    lineHeight: 1.15,
-    letterSpacing: "-0.02em",
-    margin: "0 0 14px",
-  },
-  lead: {
-    fontFamily: '"Plus Jakarta Sans", sans-serif',
-    fontSize: "1rem",
-    color: "rgba(255,255,255,0.38)",
-    lineHeight: 1.7,
-    margin: 0,
-  },
-  sectionLabel: {
-    fontFamily: "Bricolage Grotesque, sans-serif",
-    fontSize: "11px",
-    fontWeight: 700,
-    letterSpacing: "0.1em",
-    textTransform: "uppercase",
-    color: "rgba(255,255,255,0.22)",
-    margin: "0 0 10px",
-  },
-  card: {
-    background: "rgba(255,255,255,0.03)",
-    border: "1px solid rgba(255,255,255,0.08)",
-    borderRadius: "16px",
-    overflow: "hidden",
-  },
-  divider: {
-    height: "1px",
-    background: "rgba(255,255,255,0.06)",
-    margin: "0 20px",
-  },
-  row: {
-    display: "flex",
-    alignItems: "center",
-    padding: "18px 20px",
-    gap: 12,
-  },
-  rowLabel: {
-    fontFamily: "Bricolage Grotesque, sans-serif",
-    fontSize: "14px",
-    fontWeight: 700,
-    margin: "0 0 4px",
-    lineHeight: 1.3,
-  },
-  rowDesc: {
-    fontFamily: '"Plus Jakarta Sans", sans-serif',
-    fontSize: "13px",
-    color: "rgba(255,255,255,0.32)",
-    lineHeight: 1.6,
-    margin: 0,
-  },
-  infoBanner: {
-    display: "flex",
-    alignItems: "flex-start",
-    gap: 12,
-    padding: "16px 20px",
-    background: "rgba(246,82,148,0.07)",
-    borderBottom: "1px solid rgba(246,82,148,0.12)",
-  },
-  infoBannerText: {
-    fontFamily: '"Plus Jakarta Sans", sans-serif',
-    fontSize: "13px",
-    color: "rgba(255,255,255,0.45)",
-    lineHeight: 1.65,
-    margin: 0,
-  },
-  codeTag: {
-    fontFamily: '"Fira Code", "Cascadia Code", monospace',
-    fontSize: "12px",
-    padding: "4px 10px",
-    borderRadius: "6px",
-    background: "rgba(255,255,255,0.06)",
-    border: "1px solid rgba(255,255,255,0.08)",
-    color: "rgba(255,255,255,0.55)",
-    whiteSpace: "nowrap",
-  },
-  badge: {
-    fontFamily: "Bricolage Grotesque, sans-serif",
-    fontSize: "11px",
-    fontWeight: 700,
-    letterSpacing: "0.05em",
-    padding: "4px 10px",
-    borderRadius: "100px",
-    whiteSpace: "nowrap",
-  },
-  clearDoneTag: {
-    fontFamily: '"Plus Jakarta Sans", sans-serif',
-    fontSize: "12px",
-    fontWeight: 600,
-    color: "#48bb78",
-    whiteSpace: "nowrap",
-  },
-};

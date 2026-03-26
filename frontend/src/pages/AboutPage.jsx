@@ -74,50 +74,27 @@ export default function AboutPage() {
   const { sidebarW } = useSidebar();
   return (
     <>
-      <div
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 0,
-          backgroundColor: "#0A0A0A",
-        }}
-      />
+      <div className="fixed inset-0 z-0 bg-[#0A0A0A]" />
 
       <motion.main
-        style={{
-          position: "relative",
-          zIndex: 10,
-          display: "flex",
-          flexDirection: "column",
-          flex: 1,
-          height: "100vh",
-          overflowY: "auto",
-          overflowX: "hidden",
-        }}
+        className="relative z-10 flex flex-col flex-1 h-[100dvh] overflow-y-auto overflow-x-hidden max-md:!ml-0"
         animate={{ marginLeft: sidebarW }}
         transition={{ type: "spring", stiffness: 340, damping: 32 }}
       >
-        <div
-          style={{
-            maxWidth: 820,
-            margin: "0 auto",
-            padding: "72px 32px 80px",
-            width: "100%",
-          }}
-        >
+        <div className="max-w-[820px] mx-auto pt-[72px] px-[32px] pb-[80px] w-full">
           <Reveal style={{ marginBottom: 64 }}>
-            <p style={styles.eyebrow}>About this project</p>
-            <h1 style={styles.pageTitle}>
+            <p className="font-jakarta text-[0.75rem] font-semibold tracking-[0.1em] uppercase text-[#f65294] mb-[14px]">About this project</p>
+            <h1 className="font-['Bricolage_Grotesque',sans-serif] text-[clamp(2rem,4vw,3rem)] font-extrabold text-white/92 leading-[1.15] tracking-[-0.02em] m-0 mb-[20px]">
               A RAG-powered docs assistant
               <br />
               for UI libraries.
             </h1>
-            <p style={styles.lead}>
+            <p className="font-jakarta text-[1.05rem] text-white/45 leading-[1.75] m-0 max-w-[600px] text-justify">
               Tired of tabbing between documentation sites while building? Meet{" "}
-              <span style={{ color: "#f65294" }}>ComponentSense</span>. This
+              <span className="text-[#f65294]">ComponentSense</span>. This
               tool lets you ask questions about{" "}
-              <span style={{ color: "#2f97fe" }}>Material UI</span> and{" "}
-              <span style={{ color: "#9a75f2" }}>React Native Paper</span> in
+              <span className="text-[#2f97fe]">Material UI</span> and{" "}
+              <span className="text-[#9a75f2]">React Native Paper</span> in
               plain English and get accurate, citation-grounded answers,
               instantly!
             </p>
@@ -128,24 +105,24 @@ export default function AboutPage() {
           <Reveal style={{ marginBottom: 56 }}>
             <SectionLabel>How I built it</SectionLabel>
 
-            <div style={{ display: "flex", flexDirection: "column" }}>
+            <div className="flex flex-col">
               {HOW_I_BUILT_IT.map((item, i) => (
                 <Reveal
                   key={item.step}
                   delay={i * 0.07}
-                  style={styles.stepRow}
+                  style={{ display: "flex", gap: "24px" }}
                   vertical
                 >
-                  <div style={styles.stepLeft}>
-                    <span style={styles.stepNumber}>{item.step}</span>
+                  <div className="flex flex-col items-center shrink-0 pt-[3px]">
+                    <span className="font-['Bricolage_Grotesque',sans-serif] text-[0.75rem] font-bold text-[#f65294] tracking-[0.06em] leading-none">{item.step}</span>
                     {i < HOW_I_BUILT_IT.length - 1 && (
-                      <div style={styles.stepLine} />
+                      <div className="w-[1px] flex-1 min-h-[24px] bg-white/5 my-2" />
                     )}
                   </div>
 
-                  <div style={styles.stepContent}>
-                    <p style={styles.stepTitle}>{item.title}</p>
-                    <p style={styles.stepDesc}>{item.description}</p>
+                  <div className="pb-7">
+                    <p className="font-['Bricolage_Grotesque',sans-serif] text-[1rem] font-bold text-white/88 m-0 mb-1.5">{item.title}</p>
+                    <p className="font-jakarta text-[0.875rem] text-white/40 leading-[1.7] m-0">{item.description}</p>
                   </div>
                 </Reveal>
               ))}
@@ -164,38 +141,23 @@ export default function AboutPage() {
               return (
                 <div
                   key={category}
-                  style={{
-                    marginBottom: 20,
-                    display: "flex",
-                    alignItems: "baseline",
-                    gap: 16,
-                    flexWrap: "wrap",
-                  }}
+                  className="mb-5 flex items-baseline gap-4 flex-wrap"
                 >
                   <span
-                    style={{
-                      ...styles.categoryLabel,
-                      color: colors.text,
-                      minWidth: 68,
-                    }}
+                    className="font-['Bricolage_Grotesque',sans-serif] text-[0.75rem] font-bold tracking-[0.06em] uppercase min-w-[68px]"
+                    style={{ color: colors.text }}
                   >
                     {category}
                   </span>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                  <div className="flex flex-wrap gap-2">
                     {items.map((item, ii) => (
                       <Reveal key={item.label} delay={ii * 0.04}>
                         <span
+                          className="inline-block px-[14px] py-[5px] rounded-full text-[0.8125rem] font-jakarta font-medium tracking-[0.01em]"
                           style={{
-                            display: "inline-block",
-                            padding: "5px 14px",
-                            borderRadius: "100px",
-                            fontSize: "13px",
-                            fontFamily: '"Plus Jakarta Sans", sans-serif',
-                            fontWeight: 500,
                             background: colors.bg,
                             border: `1px solid ${colors.border}`,
                             color: colors.text,
-                            letterSpacing: "0.01em",
                           }}
                         >
                           {item.label}
@@ -210,10 +172,10 @@ export default function AboutPage() {
 
           <Divider />
 
-          <div style={{ display: "flex", flexDirection: "row", gap: "5%" }}>
-            <Reveal offset={120} style={{ width: "45%" }}>
+          <div className="flex flex-col md:flex-row gap-8 md:gap-[5%]">
+            <Reveal offset={120} className="w-full md:w-[45%]">
               <SectionLabel>Source code</SectionLabel>
-              <p style={{ ...styles.stepDesc, marginBottom: 24 }}>
+              <p className="font-jakarta text-[0.875rem] text-white/40 leading-[1.7] m-0 mb-6">
                 The full source: backend ingestion pipeline, API server, and
                 this frontend is available on GitHub. PRs and issues are
                 welcome.
@@ -223,14 +185,14 @@ export default function AboutPage() {
                 href={GITHUB_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ textDecoration: "none", display: "inline-block" }}
+                className="no-underline block"
               >
                 <motion.div
                   whileHover={{
                     backgroundColor: "rgba(255,255,255,0.09)",
                   }}
                   whileTap={{ scale: 0.97 }}
-                  style={styles.linkButton}
+                  className="flex items-center gap-[14px] px-[18px] py-[14px] rounded-[12px] bg-white/[0.04] border border-white/[0.08] text-white/60 cursor-pointer mb-2.5 w-full box-border"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -238,15 +200,15 @@ export default function AboutPage() {
                     height="20"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
-                    style={{ flexShrink: 0 }}
+                    className="shrink-0"
                   >
                     <title>GitHub</title>
                     <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
                   </svg>
                   <div>
-                    <p style={styles.linkTitle}>View on GitHub</p>
-                    <p style={styles.linkURL}>
-                      {GITHUB_URL.replace("https://", "")}
+                    <p className="font-['Bricolage_Grotesque',sans-serif] text-[1rem] font-bold text-white/88 m-0 mb-0.5">View on GitHub</p>
+                    <p className="font-jakarta text-[0.75rem] text-white/35 m-0">
+                      {GITHUB_URL.replace("https://github.com/", "")}
                     </p>
                   </div>
                   <svg
@@ -254,7 +216,7 @@ export default function AboutPage() {
                     height="16"
                     viewBox="0 0 16 16"
                     fill="none"
-                    style={{ marginLeft: "auto", flexShrink: 0, opacity: 0.4 }}
+                    className="ml-auto shrink-0 opacity-40"
                   >
                     <path
                       d="M3 8h10M9 4l4 4-4 4"
@@ -267,9 +229,9 @@ export default function AboutPage() {
                 </motion.div>
               </a>
             </Reveal>
-            <Reveal reverse offset={120} style={{ width: "45%" }}>
+            <Reveal reverse offset={120} className="w-full md:w-[45%]">
               <SectionLabel>Socials</SectionLabel>
-              <p style={{ ...styles.stepDesc, marginBottom: 20 }}>
+              <p className="font-jakarta text-[0.875rem] text-white/40 leading-[1.7] m-0 mb-5">
                 Find me below and explore my work.
               </p>
 
@@ -277,7 +239,7 @@ export default function AboutPage() {
                 href={LINKEDIN_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ textDecoration: "none", display: "block" }}
+                className="no-underline block"
               >
                 <motion.div
                   whileHover={{
@@ -285,9 +247,9 @@ export default function AboutPage() {
                     borderColor: "rgba(10,132,255,0.28)",
                   }}
                   whileTap={{ scale: 0.97 }}
-                  style={styles.linkButton}
+                  className="flex items-center gap-[14px] px-[18px] py-[14px] rounded-[12px] bg-white/[0.04] border border-white/[0.08] text-white/60 cursor-pointer mb-2.5 w-full box-border"
                 >
-                  <div style={styles.iconWrap("#0A84FF")}>
+                  <div className="w-[34px] h-[34px] rounded-[9px] bg-[#0A84FF] flex items-center justify-center shrink-0">
                     <svg
                       width="16"
                       height="16"
@@ -297,9 +259,9 @@ export default function AboutPage() {
                       <path d="M21.06 48.73h18.11V107H21.06zm9.06-29a10.5 10.5 0 11-10.5 10.49 10.5 10.5 0 0110.5-10.49M50.53 48.73h17.36v8h.24c2.42-4.58 8.32-9.41 17.13-9.41C103.6 47.28 107 59.35 107 75v32H88.89V78.65c0-6.75-.12-15.44-9.41-15.44s-10.87 7.36-10.87 15V107H50.53z" />
                     </svg>
                   </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={styles.linkTitle}>LinkedIn</p>
-                    <p style={styles.linkURL}>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-['Bricolage_Grotesque',sans-serif] text-[1rem] font-bold text-white/88 m-0 mb-0.5">LinkedIn</p>
+                    <p className="font-jakarta text-[0.75rem] text-white/35 m-0">
                       {LINKEDIN_URL.replace("https://", "")}
                     </p>
                   </div>
@@ -308,7 +270,7 @@ export default function AboutPage() {
                     height="15"
                     viewBox="0 0 16 16"
                     fill="none"
-                    style={{ flexShrink: 0, opacity: 0.35 }}
+                    className="shrink-0 opacity-35"
                   >
                     <path
                       d="M3 8h10M9 4l4 4-4 4"
@@ -325,7 +287,7 @@ export default function AboutPage() {
                 href={PORTFOLIO_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ textDecoration: "none", display: "block" }}
+                className="no-underline block"
               >
                 <motion.div
                   whileHover={{
@@ -333,9 +295,9 @@ export default function AboutPage() {
                     borderColor: "rgba(240,62,132,0.28)",
                   }}
                   whileTap={{ scale: 0.97 }}
-                  style={styles.linkButton}
+                  className="flex items-center gap-[14px] px-[18px] py-[14px] rounded-[12px] bg-white/[0.04] border border-white/[0.08] text-white/60 cursor-pointer mb-2.5 w-full box-border"
                 >
-                  <div style={styles.iconWrap("#f65294")}>
+                  <div className="w-[34px] h-[34px] rounded-[9px] bg-[#f65294] flex items-center justify-center shrink-0">
                     <svg
                       width="16"
                       height="16"
@@ -352,9 +314,9 @@ export default function AboutPage() {
                       <path d="M2 12h20" />
                     </svg>
                   </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={styles.linkTitle}>Portfolio</p>
-                    <p style={styles.linkURL}>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-['Bricolage_Grotesque',sans-serif] text-[1rem] font-bold text-white/88 m-0 mb-0.5">Portfolio</p>
+                    <p className="font-jakarta text-[0.75rem] text-white/35 m-0">
                       {PORTFOLIO_LINK.replace("https://", "")}
                     </p>
                   </div>
@@ -363,7 +325,7 @@ export default function AboutPage() {
                     height="15"
                     viewBox="0 0 16 16"
                     fill="none"
-                    style={{ flexShrink: 0, opacity: 0.35 }}
+                    className="shrink-0 opacity-35"
                   >
                     <path
                       d="M3 8h10M9 4l4 4-4 4"
@@ -385,17 +347,7 @@ export default function AboutPage() {
 
 function SectionLabel({ children }) {
   return (
-    <p
-      style={{
-        fontFamily: "Bricolage Grotesque, sans-serif",
-        fontSize: "11px",
-        fontWeight: 700,
-        letterSpacing: "0.1em",
-        textTransform: "uppercase",
-        color: "rgba(255,255,255,0.25)",
-        marginBottom: 20,
-      }}
-    >
+    <p className="font-['Bricolage_Grotesque',sans-serif] text-[0.75rem] font-bold tracking-[0.1em] uppercase text-white/25 mb-[20px] m-0">
       {children}
     </p>
   );
@@ -406,135 +358,13 @@ function Divider() {
   const inView = useInView(ref, { once: true, margin: "-60px 0px" });
 
   return (
-    <motion.hr
+    <motion.div
       ref={ref}
       initial={{ opacity: 0, scaleX: 0.85, originX: 0 }}
       animate={inView ? { opacity: 1, scaleX: 1 } : {}}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      style={{
-        border: "none",
-        borderTop: "1px solid rgba(255,255,255,0.07)",
-        margin: "0 0 48px 36px",
-      }}
+      className="h-px bg-white/[0.07] mb-12 max-md:ml-0 md:ml-9"
     />
   );
 }
 
-const styles = {
-  eyebrow: {
-    fontFamily: '"Plus Jakarta Sans", sans-serif',
-    fontSize: "12px",
-    fontWeight: 600,
-    letterSpacing: "0.1em",
-    textTransform: "uppercase",
-    color: "#f65294",
-    marginBottom: 14,
-  },
-  pageTitle: {
-    fontFamily: "Bricolage Grotesque, sans-serif",
-    fontSize: "clamp(2rem, 4vw, 3rem)",
-    fontWeight: 800,
-    color: "rgba(255,255,255,0.92)",
-    lineHeight: 1.15,
-    letterSpacing: "-0.02em",
-    margin: "0 0 20px",
-  },
-  lead: {
-    fontFamily: '"Plus Jakarta Sans", sans-serif',
-    fontSize: "1.05rem",
-    color: "rgba(255,255,255,0.45)",
-    lineHeight: 1.75,
-    margin: 0,
-    maxWidth: 600,
-    textAlign: "justify",
-  },
-  stepRow: {
-    display: "flex",
-    gap: 24,
-  },
-  stepLeft: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    flexShrink: 0,
-    paddingTop: 3,
-  },
-  stepNumber: {
-    fontFamily: "Bricolage Grotesque, sans-serif",
-    fontSize: "11px",
-    fontWeight: 700,
-    color: "#f65294",
-    letterSpacing: "0.06em",
-    lineHeight: 1,
-  },
-  stepLine: {
-    width: 1,
-    flex: 1,
-    minHeight: 24,
-    background: "rgba(255,255,255,0.07)",
-    margin: "8px 0",
-  },
-  stepContent: {
-    paddingBottom: 28,
-  },
-  stepTitle: {
-    fontFamily: "Bricolage Grotesque, sans-serif",
-    fontSize: "15px",
-    fontWeight: 700,
-    color: "rgba(255,255,255,0.88)",
-    margin: "0 0 6px",
-  },
-  stepDesc: {
-    fontFamily: '"Plus Jakarta Sans", sans-serif',
-    fontSize: "14px",
-    color: "rgba(255,255,255,0.42)",
-    lineHeight: 1.7,
-    margin: 0,
-  },
-  categoryLabel: {
-    fontFamily: "Bricolage Grotesque, sans-serif",
-    fontSize: "11px",
-    fontWeight: 700,
-    letterSpacing: "0.06em",
-    textTransform: "uppercase",
-  },
-
-  iconWrap: (color) => ({
-    width: 34,
-    height: 34,
-    borderRadius: "9px",
-    background: color,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexShrink: 0,
-  }),
-
-  linkButton: {
-    display: "flex",
-    alignItems: "center",
-    gap: 14,
-    padding: "14px 18px",
-    borderRadius: "12px",
-    background: "rgba(255,255,255,0.04)",
-    border: "1px solid rgba(255,255,255,0.08)",
-    color: "rgba(255,255,255,0.6)",
-    cursor: "pointer",
-    marginBottom: 10,
-    width: "100%",
-    boxSizing: "border-box",
-  },
-  linkTitle: {
-    fontFamily: "Bricolage Grotesque, sans-serif",
-    fontSize: "15px",
-    fontWeight: 700,
-    color: "rgba(255,255,255,0.88)",
-    margin: "0 0 2px",
-  },
-  linkURL: {
-    fontFamily: '"Plus Jakarta Sans", sans-serif',
-    fontSize: "12px",
-    color: "rgba(255,255,255,0.35)",
-    margin: 0,
-  },
-};

@@ -22,7 +22,7 @@ export const LIBRARIES = {
     subtext: "Ask any question related to the Material UI library",
     examples: [
       "How to customise MUI Button styles?",
-      "MUI DataGrid with server-side pagination",
+      "DataGrid with server-side pagination",
       "Implement a global MUI dark theme",
       "MUI Autocomplete with async search",
     ],
@@ -40,7 +40,6 @@ export const LIBRARIES = {
     ],
   },
 };
-
 
 const normaliseMessages = (msgs = [], chatKey = "ephemeral") =>
   msgs.map((msg, index) => ({
@@ -70,7 +69,6 @@ const pageVariants = {
   }),
 };
 
-
 export default function HomePage() {
   const [activeLib, setActiveLib] = useState("mui");
   const [chatStarted, setChatStarted] = useState(false);
@@ -94,7 +92,6 @@ export default function HomePage() {
   const BACKEND_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
-    console.log("Child sees isConnected:", isConnectedToBackend);
   }, [isConnectedToBackend]);
 
   useEffect(() => {
@@ -102,7 +99,6 @@ export default function HomePage() {
       if (hydratedChatRef.current === chatId) return;
 
       const chat = loadChat(chatId);
-      console.log(chatId, chat);
 
       if (chat) {
         hydratedChatRef.current = chatId;
@@ -139,11 +135,6 @@ export default function HomePage() {
   const handleSubmit = useCallback(
     async (query) => {
       if (!query.trim() || isLoading) return;
-
-      /* if (!isConnectedToBackend) {
-        alert("Not connected to Backend");
-        return;
-      } */
 
       const newUserMsg = {
         id: crypto.randomUUID(),
@@ -197,15 +188,12 @@ export default function HomePage() {
         if (!resp.ok) {
           if (resp.status === 429) {
             const retryAfter = resp.headers.get("Retry-After");
-            console.log(retryAfter);
             savedAssistantMsg = {
               id: crypto.randomUUID(),
               role: "assistant",
               content: `${body.detail || "Too many requests"}${retryAfter ? ` Try again in ${retryAfter}s.` : ""
                 }`,
             };
-
-            console.log("Rate limited:", savedAssistantMsg);
           } else
             throw new Error(
               body.detail || `Request failed with ${resp.status}`,
@@ -217,7 +205,6 @@ export default function HomePage() {
             content: body.answer ?? body.detail,
           };
         }
-        console.log(savedAssistantMsg);
       } catch (err) {
         console.error("Fetch error:", err);
 
@@ -257,22 +244,14 @@ export default function HomePage() {
   return (
     <>
       <motion.div
-        style={{ position: "fixed", inset: 0, zIndex: 0 }}
+        className="fixed inset-0 z-0"
         animate={{ backgroundColor: chatStarted ? "#0A0A0A" : "#f65294" }}
         initial={{ backgroundColor: "#f65294" }}
         transition={{ duration: 0.72, ease: [0.4, 0, 0.2, 1] }}
       />
 
       <motion.main
-        style={{
-          position: "relative",
-          zIndex: 10,
-          display: "flex",
-          flexDirection: "column",
-          flex: 1,
-          height: "100vh",
-          overflow: "hidden",
-        }}
+        className="relative z-10 flex flex-col flex-1 h-[100dvh] overflow-hidden"
         animate={{ marginLeft: sidebarW }}
         transition={{
           duration: 0.45,
@@ -282,16 +261,8 @@ export default function HomePage() {
         }}
       >
         <motion.div
-          style={{
-            position: "fixed",
-            top: 24,
-            right: 0,
-            zIndex: 50,
-            display: "flex",
-            justifyContent: "center",
-            pointerEvents: "none",
-            left: sidebarW,
-          }}
+          className="fixed top-16 md:top-6 right-0 z-50 flex justify-center pointer-events-none"
+          style={{ left: sidebarW }}
           initial={{ y: -56, opacity: 0 }}
           animate={{ y: 0, opacity: 1, left: sidebarW }}
           transition={{
@@ -300,7 +271,7 @@ export default function HomePage() {
             left: { type: "spring", stiffness: 340, damping: 32 },
           }}
         >
-          <div style={{ pointerEvents: "auto" }}>
+          <div className="pointer-events-auto">
             <LibraryTabs
               tabs={LIBRARIES}
               active={activeLib}
@@ -311,11 +282,7 @@ export default function HomePage() {
         </motion.div>
 
         <div
-          style={{
-            position: "relative",
-            flex: 1,
-            overflow: chatStarted ? "visible" : "hidden",
-          }}
+          className={`relative flex-1 ${chatStarted ? "overflow-visible" : "overflow-y-auto overflow-x-hidden"}`}
         >
           <AnimatePresence mode="wait" initial={false}>
             {!chatStarted ? (
@@ -326,27 +293,10 @@ export default function HomePage() {
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "80px 24px 32px",
-                }}
+                className="absolute inset-x-0 top-0 min-h-full flex flex-col items-center justify-center pt-[130px] md:pt-[100px] px-6 pb-8"
               >
                 <h1
-                  style={{
-                    fontFamily: "Bricolage Grotesque, sans-serif",
-                    fontSize: "clamp(3em, 6.25vw, 4.68rem)",
-                    fontWeight: 800,
-                    color: "#0A0A0A",
-                    margin: "0 0 14px",
-                    lineHeight: 1.1,
-                    letterSpacing: "-0.02em",
-                    textAlign: "center",
-                  }}
+                  className="font-['Bricolage_Grotesque',sans-serif] text-[clamp(2.5rem,6.25vw,4.68rem)] font-extrabold text-[#0A0A0A] m-0 mb-3.5 leading-[1.1] tracking-[-0.02em] text-center"
                 >
                   How can I help you today?
                 </h1>
@@ -358,14 +308,7 @@ export default function HomePage() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.25, ease: "easeOut" }}
-                    style={{
-                      fontFamily: '"Plus Jakarta Sans", sans-serif',
-                      fontSize: "1.1rem",
-                      color: "rgba(0,0,0,0.52)",
-                      margin: "0 0 48px",
-                      lineHeight: 1.5,
-                      textAlign: "center",
-                    }}
+                    className="font-jakarta text-[1.1rem] text-black/52 m-0 mb-8 md:mb-12 leading-relaxed text-center"
                   >
                     {lib.subtext}
                   </motion.p>
@@ -379,7 +322,7 @@ export default function HomePage() {
                     delay: 0.1,
                     ease: "easeOut",
                   }}
-                  style={{ width: "100%", maxWidth: 672 }}
+                  className="w-full max-w-2xl"
                 >
                   <AIInput
                     onSubmit={handleSubmit}
@@ -395,7 +338,7 @@ export default function HomePage() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.28, delay: 0.1 }}
-                    style={{ width: "100%", maxWidth: 672, marginTop: 20 }}
+                    className="w-full max-w-2xl mt-5"
                   >
                     <ExampleChips
                       examples={lib.examples}
@@ -412,32 +355,17 @@ export default function HomePage() {
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  overflow: "hidden",
-                  paddingTop: 80,
-                }}
+                className="absolute inset-0 flex flex-col overflow-hidden pt-24 md:pt-20"
               >
                 <div
-                  className="chat-container"
+                  className="chat-container flex flex-1 min-h-0 overflow-y-auto pb-[100px] max-md:px-2"
                   key={chatId || "ephemeral"}
-                  style={{
-                    flex: 1,
-                    minHeight: 0,
-                    overflowY: "auto",
-                    paddingBottom: 100,
-                  }}
                 >
                   <ChatMessages
                     messages={messages}
                     isLoading={isLoading}
                     libLabel={lib.label}
-                    onStreamingEnd={
-                      () => { }
-                    }
+                    onStreamingEnd={() => { }}
                   />
                 </div>
 
@@ -449,25 +377,9 @@ export default function HomePage() {
                     delay: 0.18,
                     ease: "easeOut",
                   }}
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    display: "flex",
-                    justifyContent: "center",
-                    padding: "20px 0 22px",
-                    pointerEvents: "none",
-                    zIndex: 20,
-                    background: "#0A0A0A",
-                  }}
+                  className="absolute inset-x-0 bottom-0 flex justify-center py-5 px-0 pointer-events-none z-20 bg-[#0A0A0A]"
                 >
-                  <div
-                    style={{
-                      width: "min(672px, calc(100vw - 80px))",
-                      pointerEvents: "auto",
-                    }}
-                  >
+                  <div className="w-[min(672px,calc(100vw-32px))] md:w-[min(672px,calc(100vw-80px))] pointer-events-auto">
                     <AIInput
                       onSubmit={handleSubmit}
                       isLoading={isLoading}
@@ -479,7 +391,6 @@ export default function HomePage() {
             )}
           </AnimatePresence>
         </div>
-
       </motion.main>
     </>
   );
