@@ -6,19 +6,36 @@ from dotenv import load_dotenv
 from google import genai
 from pinecone import Pinecone
 
+
 def load_env():
     env_path = (Path(__file__).resolve().parent.parent / ".env").resolve()
     load_dotenv(env_path)
 
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("query", nargs="?", default="How do I control the expanded state of MUI Accordion?")
-    parser.add_argument("--index-name", default=os.getenv("PINECONE_INDEX_NAME", "ui-component-sense"))
-    parser.add_argument("--namespace", default=os.getenv("PINECONE_NAMESPACE", "mui-rnpaper"))
-    parser.add_argument("--embed-model", default=os.getenv("GEMINI_EMBED_MODEL", "gemini-embedding-001"))
-    parser.add_argument("--gen-model", default=os.getenv("GEMINI_GEN_MODEL", "gemini-3.1-flash-lite-preview"))
+    parser.add_argument(
+        "query",
+        nargs="?",
+        default="How do I control the expanded state of MUI Accordion?",
+    )
+    parser.add_argument(
+        "--index-name", default=os.getenv("PINECONE_INDEX_NAME", "ui-component-sense")
+    )
+    parser.add_argument(
+        "--namespace", default=os.getenv("PINECONE_NAMESPACE", "mui-rnpaper")
+    )
+    parser.add_argument(
+        "--embed-model", default=os.getenv("GEMINI_EMBED_MODEL", "gemini-embedding-001")
+    )
+    parser.add_argument(
+        "--gen-model",
+        default=os.getenv("GEMINI_GENERATION_MODEL", "gemini-3.1-flash-lite-preview"),
+    )
     parser.add_argument("--top-k", type=int, default=6)
-    parser.add_argument("--dimension", type=int, default=int(os.getenv("GEMINI_EMBED_DIMENSION", "768")))
+    parser.add_argument(
+        "--dimension", type=int, default=int(os.getenv("GEMINI_EMBED_DIMENSION", "768"))
+    )
     args = parser.parse_args()
 
     load_env()
@@ -95,6 +112,7 @@ Retrieved context:
 
     print("\n--- ANSWER ---\n")
     print(out.text)
+
 
 if __name__ == "__main__":
     main()
