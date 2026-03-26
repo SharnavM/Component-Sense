@@ -1,18 +1,5 @@
 import os
-from dotenv import load_dotenv
 from pathlib import Path
-
-
-def load_project_env() -> Path:
-    env_path = Path(__file__).resolve().parent.parent / ".env"
-    if not env_path.exists():
-        raise FileNotFoundError(f"Missing .env at {env_path}")
-
-    load_dotenv(env_path, override=False)
-    return env_path
-
-
-load_project_env()
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")

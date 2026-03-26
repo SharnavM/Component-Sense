@@ -2,5 +2,4 @@ fastapi
 uvicorn
 google-genai 
 pinecone 
-python-dotenv
 starlette
